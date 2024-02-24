@@ -1,0 +1,247 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="Smarthr - Bootstrap Admin Template">
+    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="robots" content="noindex, nofollow">
+    {% block title %}
+    <title></title>
+    {% endblock %}
+    {% block head %}{% endblock %}
+{#    <link rel="shortcut icon" type="image/x-icon" href="{% static 'dashbaord_icons/four_dots.png' %}">#}
+        <link rel="icon shortcut" type="image/x-icon" href="{% static 'SVS4160x160.png' %}">
+
+
+
+    <!-- Custom Google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;600&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'blue_hrms/assets/css/bootstrap.min.css' %}">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{% static 'blue_hrms/assets/css/font-awesome.min.css' %}">
+
+    <!-- Lineawesome CSS -->
+    <link rel="stylesheet" href="{% static 'blue_hrms/assets/css/line-awesome.min.css' %}">
+
+    <!-- Data Table Css -->
+{#    <link rel="stylesheet" type="text/css" href="{% static 'blue_hrms/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}">#}
+    <link rel="stylesheet" type="text/css" href="{% static 'blue_hrms/data-table/css/buttons.dataTables.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'blue_hrms/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}">
+
+    <!-- Datatable CSS -->
+    <link rel="stylesheet" href="{% static 'blue_hrms/assets/css/dataTables.bootstrap4.min.css' %}">
+{#    <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />#}
+
+    <!-- Select2 CSS -->
+    <link rel="stylesheet" href="{% static 'blue_hrms/assets/css/select2.min.css' %}">
+
+    <!-- Datetimepicker CSS -->
+    <link rel="stylesheet" href="{% static 'blue_hrms/assets/css/bootstrap-datetimepicker.min.css' %}">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'blue_hrms/assets/css/style.css' %}">
+
+
+    <!-- Sweetalerts CSS -->
+    <link rel="stylesheet" href="{% static 'sweetalert.css' %}">
+    <script src="{% static 'sweetalert.js' %}"></script>
+
+
+    <!-- Sweet alerts CSS -->
+    <link rel="stylesheet" href="{% static 'sweetalerts/sweetalert.css' %}">
+    <script src="{% static 'sweetalerts/sweetalert.min.js' %}"></script>
+
+    <!-- Unicons CSS -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <!-- Autocomplete -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Chart -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+
+
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <!-- Required Fremwork -->
+    <link rel="stylesheet" type="text/css" href="{% static 'intro.js/css/introjs.css' %}">
+
+    <link rel="stylesheet" href="{% static 'custom_css/toaster.css' %}">
+    {% block links %}
+    {% endblock %}
+
+   
+</head>
+<body class="">
+{#<body class="mini-sidebar">#}
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+
+        <!-- Loader -->
+{#        <div id="loader-wrapper">#}
+{#            <div id="loader">#}
+{#                <div class="loader-ellips">#}
+{#                    <span class="loader-ellips__dot"></span>#}
+{#                    <span class="loader-ellips__dot"></span>#}
+{#                    <span class="loader-ellips__dot"></span>#}
+{#                    <span class="loader-ellips__dot"></span>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+        <!-- /Loader -->
+        <!-- Header -->
+{#        <div class="header bg-gradient-secondary" style="background: whitesmoke">#}
+{#        <div class="header" style="background: rgba(251,150,120,0.75)">#}
+{#        <div class="header" style="background: #fb9678">#}
+        <div class="header">
+{#        <div class="header" style="background: linear-gradient(to bottom right,#69c7de 0, #1e9fc4 100%);color: white">#}
+
+            <!-- Logo -->
+                <div class="header-left">
+                    <a href="#" class="logo" id="org-logo">
+                        {% if organization.org_logo_400X400 %}
+                            <img src="{{ organization.org_logo_400X400.url }}" style="height: 50px; width: 100px" alt="">
+                        {% else %}
+                            EMS
+                        {% endif %}
+					</a>
+                </div>
+            <!-- /Logo -->
+
+            <a id="toggle_btn" href="javascript:void(0);" onclick="$('#org-logo').toggle('hide');$('.page-title-box').toggle('show')">
+                <span class="bar-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </a>
+
+            <!-- Header Title -->
+            <div class="page-title-box" style="display: none">
+                <h3>{{ organization.org_name }}</h3>
+            </div>
+            <!-- /Header Title -->
+
+            <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+
+            <!-- Header Menu -->
+                
+            <!-- /Header Menu -->
+            <!-- Mobile Menu -->
+            
+            <!-- /Mobile Menu -->
+
+        </div>
+        <!-- /Header -->
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li class="menu-title">
+                            <span>Event Management System</span>
+                        </li>
+                        <li id="dashboard_link">
+                            <a href="{% url "dashboard" %}"><i class="la la-dashboard"></i> <span> Dashboard</span></a>
+                            <a href="{% url "home" %}"><i class="la la-home"></i> <span> Home</span></a>
+                        </li>   
+                        <li class="dashboard_link">
+                                <li> <a href="{% url "addevent" %}"> <i class="la la-plus"></i> <span> Add Event </span></a> </li>
+                                <li><a href="{% url "viewevent" %}"> <i class="la la-eye"></i> <span> View Events </span></a> </li>
+                        </li>
+                        <li id="dashboard_link">
+                            <a href="{% url "bookticket" %}"><i class="la la-bomb"></i> <span>Book Tickets</span></a>
+                        </li>   
+
+                        <li class="submenu">
+                            <a href="{% url "login" %}"><i class="la la-key"></i> <span> Admin Login </span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- /Sidebar -->
+        <!-- Page Wrapper -->
+        <div class="page-wrapper">
+            <!-- Page Content -->
+            <div class="content container-fluid px-2 pt-2">
+                {% block content %}
+                {% endblock %}
+                    <p class="card text-center p-2 text-muted fixed-bottom position-absolute mb-0" style="border-radius: 0;z-index: 999">copyright © {% now 'Y' %} | {{ organization.org_name }} </p>
+            </div>
+            <!-- /Page Content -->
+        </div>
+        <!-- /Page Wrapper -->
+
+    </div>
+    <!-- /Main Wrapper -->
+    <!-- jQuery -->
+{#    <script src="{% static 'blue_hrms/assets/js/jquery-3.2.1.min.js' %}" defer></script>#}
+{#      <script src="https://code.jquery.com/jquery-3.6.0.js"></script>#}
+      <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <!-- Bootstrap Core JS -->
+    <script src="{% static 'blue_hrms/assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'blue_hrms/assets/js/bootstrap.min.js' %}"></script>
+
+    <!-- Slimscroll JS -->
+    <script src="{% static 'blue_hrms/assets/js/jquery.slimscroll.min.js' %}"></script>
+
+    <!-- Select2 JS -->
+    <script src="{% static 'blue_hrms/assets/js/select2.min.js' %}"></script>
+
+    <!-- data-table js -->
+    <script src="{% static 'blue_hrms/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'blue_hrms/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+{#    <script src="{% static 'blue_hrms/data-table/js/jszip.min.js' %}"></script>#}
+{#    <script src="{% static 'blue_hrms/data-table/js/pdfmake.min.js' %}"></script>#}
+{#    <script src="{% static 'blue_hrms/data-table/js/vfs_fonts.js' %}"></script>#}
+{#    <script src="{% static 'blue_hrms/datatables.net-buttons/js/buttons.print.min.js' %}"></script>#}
+    <script src="{% static 'blue_hrms/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'blue_hrms/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'blue_hrms/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'blue_hrms/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+
+    <script src="{% static 'blue_hrms/data-table/js/data-table-custom.js' %}"></script>
+
+    <!-- Datetimepicker JS -->
+    <script src="{% static 'blue_hrms/assets/js/moment.min.js' %}"></script>
+    <script src="{% static 'blue_hrms/assets/js/bootstrap-datetimepicker.min.js' %}"></script>
+{#    <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>#}
+
+    <!-- Custom JS -->
+    <script src="{% static 'blue_hrms/assets/js/app.js' %}"></script>
+
+
+
+    <!-- jquery slimscroll js -->
+    <script type="text/javascript" src="{% static 'intro.js/js/intro.js' %}"></script>
+   
+
+    {% block scripts %}
+    {% endblock %}
+
+    <script>
+        {% for message in messages %}
+            {% if message.tags == "success" %}
+            swal("Success!", "{{ message }}", "success");
+            {% else %}
+            swal("Failed!", "{{ message }}", "warning");
+            {% endif %}
+        {% endfor %}
+    </script>
+   
+</body>
+</html>

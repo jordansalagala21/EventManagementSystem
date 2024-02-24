@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">Manage Events</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item active">Add Events</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-0">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Add Event</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'addevent' %}">
+                        {% csrf_token %}
+                        <h4 class="card-title mb-4 border-bottom pb-2">Basic Details</h4>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Event Name</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="event_name" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Organiser Name</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="organiser_name" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Time</label>
+                                    <div class="col-lg-9">
+                                        <input type="time" name="time" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Date</label>
+                                    <div class="col-lg-9">
+                                        <input type="date" name="date" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Venue</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="venue" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Theme</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="theme" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="card-title mb-4 border-bottom pb-2">Vendor Details</h4>
+                        <div id="vendor-details">
+                            <!-- Vendor details inputs -->
+                            <div class="vendor">
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <div class="form-group row">
+                                            <label class="col-lg-3 col-form-label">Vendor Name</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="vendor_name[]" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-3 col-form-label">Purpose</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="purpose[]" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="form-group row">
+                                            <label class="col-lg-3 col-form-label">Contact Number</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="contact[]" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-3 col-form-label">Cost</label>
+                                            <div class="col-lg-9">
+                                                <input type="number" name="cost[]" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary mb-4" id="add-vendor">Add Vendor</button>
+                        
+                        <h4 class="card-title mb-4 border-bottom pb-2">Ticketing Details</h4>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Total Number of Tickets</label>
+                                    <div class="col-lg-9">
+                                        <input type="number" name="total_tickets" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Price per Ticket</label>
+                                    <div class="col-lg-9">
+                                        <input type="number" name="price_per_ticket" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
+
+</div>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const addVendorButton = document.getElementById('add-vendor');
+        const vendorDetailsContainer = document.getElementById('vendor-details');
+        
+        addVendorButton.addEventListener('click', function() {
+            const clonedVendor = document.querySelector('.vendor').cloneNode(true);
+            vendorDetailsContainer.appendChild(clonedVendor);
+        });
+    });
+    </script>
+
+
+
+{% endblock  %}

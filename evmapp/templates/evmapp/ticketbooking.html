@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">Book Tickets</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item active">Ticket Booking</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-0">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Ticket Booking Form</h4>
+                </div>
+                <div class="card-body">
+                    <form id="bookingForm" method="post" action="{% url 'bookticket' %}">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Event:</label>
+                                    <div class="col-lg-9">
+                                        <select name="event" class="form-control" placeholder="Select Event">
+                                            <option value="" disabled selected hidden>Select an event</option>
+                                            {% for event in events %}
+                                                {% if event.status == True %}
+                                                <option value="{{ event.id }}">{{ event.event_name }}</option>
+                                                {% else %}
+                                                <option value="" disabled selected hidden>No Events Available</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Number of Tickets:</label>
+                                    <div class="col-lg-9">
+                                        <input type="number" name="number_of_tickets" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Name:</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="name" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Contact Number:</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="contact_number" class="form-control" placeholder="eg:+919999988888" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Flat Number:</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="flat_number" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="agree" required>
+                            <label class="form-check-label" for="agree">I agree to the <a href="#">terms and conditions</a></label>
+                        </div>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-primary" id="showSummaryBtn">Book Tickets</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="ticketSummaryModal" tabindex="-1" role="dialog" aria-labelledby="ticketSummaryModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ticket Summary</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Event:</label>
+                                <input class="form-control" type="text" id="eventSummary" readonly>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Number of Tickets:</label>
+                                <input class="form-control" type="text" id="numberOfTicketsSummary" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Name:</label>
+                                <input class="form-control" type="text" id="nameSummary" readonly>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Contact Number:</label>
+                                <input class="form-control" type="text" id="contactNumberSummary" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Flat Number:</label>
+                                <input class="form-control" type="text" id="flatNumberSummary" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success" id="confirmBookingBtn">Pay With Razorpay</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const agreeCheckbox = document.getElementById('agree');
+    
+        agreeCheckbox.addEventListener('change', function () {
+            document.getElementById('showSummaryBtn').disabled = !this.checked;
+        });
+    
+        document.getElementById('showSummaryBtn').addEventListener('click', function () {
+            const event = document.querySelector('select[name="event"] option:checked').textContent;
+            const numberOfTickets = document.querySelector('input[name="number_of_tickets"]').value;
+            const name = document.querySelector('input[name="name"]').value;
+            const contactNumber = document.querySelector('input[name="contact_number"]').value;
+            const flatNumber = document.querySelector('input[name="flat_number"]').value;
+    
+            // Update modal content with ticket summary
+            document.getElementById('eventSummary').value = event;
+            document.getElementById('numberOfTicketsSummary').value = numberOfTickets;
+            document.getElementById('nameSummary').value = name;
+            document.getElementById('contactNumberSummary').value = contactNumber;
+            document.getElementById('flatNumberSummary').value = flatNumber;
+    
+            $('#ticketSummaryModal').modal('show');
+        });
+    
+        document.getElementById('confirmBookingBtn').addEventListener('click', function () {
+            document.getElementById('bookingForm').submit(); // Submit the form
+        });
+    });
+    
+</script>
+{% endblock %}
+
+
+{% block scripts %}
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+{% endblock  %}
+
+

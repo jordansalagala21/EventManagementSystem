@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">View Events</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Events</li>
+                </ul>
+            </div>
+            <div class="col-auto float-right ml-auto">
+                <a href="{% url "addevent" %}" class="btn add-btn" ><i class="fa fa-plus"></i> Add Event</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <!-- Search Filter -->
+    
+    <!-- /Search Filter -->
+
+    <div class="row">
+        {% for event in events %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h4 class="event-title"><a href="{% url 'event_detail' event.id %}">{{ event.event_name }}</a></h4>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <a href="{% url 'edit_event' event.id %}"><i class="la la-gear" style="font-size: 25px;"></i></a>
+                        </div>
+                    </div>
+                    <p class="text-muted">on {{ event.date }} at {{ event.time }}</p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="pro-deadline mb-3">
+                                <div class="sub-title">
+                                    Organizer:
+                                </div>
+                                <div class="text-muted">
+                                    {{ event.organiser }}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Inside the card body of each event -->
+                        <div class="col-md-6">
+                            <td>
+                                <form method="post" action="{% url 'update_event_status' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="event_id" value="{{ event.id }}">
+                                    {% if event.status %}
+                                        <button type="submit" class="btn btn-white btn-sm btn-rounded" name="status" value="inactive">
+                                            <i class="fa fa-dot-circle-o text-danger"></i> Make Inactive
+                                        </button>
+                                    {% else %}
+                                        <button type="submit" class="btn btn-white btn-sm btn-rounded" name="status" value="active">
+                                            <i class="fa fa-dot-circle-o text-success"></i> Make Active
+                                        </button>
+                                    {% endif %}
+                                </form>
+                            </td>
+                        </div>
+                        
+                        
+
+                        <div class="col-md-6">
+                            <div class="pro-deadline mb-3">
+                                <div class="sub-title">
+                                    Total Tickets:
+                                </div>
+                                <div class="text-muted">
+                                    {{ event.total_tickets }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pro-deadline mb-3">
+                                <div class="sub-title">
+                                    Tickets Sold:
+                                </div>
+                                <div class="text-muted">
+                                    {{total_tickets_sold}}
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    {% comment %} <p class="m-b-5">Total Funds Collected <span class="text-success float-right">{{ percentage_collected }}%</span></p>
+                    <div class="progress progress-xs mb-0">
+                        <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="" style="width: {{ percentage_collected }}%" data-original-title="{{ percentage_collected }}%"></div>
+                    </div> {% endcomment %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+
+</div>
+
+    
+
+
+
+{% endblock %}

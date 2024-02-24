@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">Edit Event</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item active">Edit Event</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-0">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Edit Event</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'edit_event' event.id %}">
+                        {% csrf_token %}
+                        <h4 class="card-title mb-4 border-bottom pb-2">Basic Details</h4>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Event Name</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="event_name" class="form-control" value="{{ event.event_name }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Organiser Name</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="organiser_name" class="form-control" value="{{ event.organiser }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Time</label>
+                                    <div class="col-lg-9">
+                                        <input type="time" name="time" class="form-control" value="{{ event.time }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Date</label>
+                                    <div class="col-lg-9">
+                                        <input type="date" name="date" class="form-control" value="{{ event.date }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Venue</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="venue" class="form-control" value="{{ event.venue }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Theme</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" name="theme" class="form-control" value="{{ event.theme }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Event</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

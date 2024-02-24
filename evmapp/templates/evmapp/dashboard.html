@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content container-fluid" style="margin-bottom: 50px;">
+				
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">Welcome Admin!</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card dash-widget">
+                <div class="card-body">
+                    <span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
+                    <div class="dash-widget-info">
+                        <h3>{{totalevents}}</h3>
+                        <span>Events Organised</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card dash-widget">
+                <div class="card-body">
+                    <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+                    <div class="dash-widget-info">
+                        <h3>{{totalvendors}}</h3>
+                        <span>Vendors</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card dash-widget">
+                <div class="card-body">
+                    <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
+                    <div class="dash-widget-info">
+                        <h3>₹{{total_funds}}</h3>
+                        <span>Funds Collected</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card dash-widget">
+                <div class="card-body">
+                    <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+                    <div class="dash-widget-info">
+                        <h3>218</h3>
+                        <span>Employees</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Event Attendance Over Time</h3>
+                    <canvas id="eventAttendanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Top Events by Revenue</h3>
+                    <canvas id="revenue-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form method="post" action="{% url 'logout' %}">
+        {%csrf_token%}
+        <button type="submit" class="btn btn-primary">Logout</button>
+    </form>
+
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        var ctx = document.getElementById('eventAttendanceChart').getContext('2d');
+        var event_labels = {{ event_labels|safe }};
+        var tickets_sold = {{ tickets_sold|safe }};
+        
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: event_labels,
+                datasets: [{
+                    label: 'Tickets Sold',
+                    data: tickets_sold,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+  
+  <script>
+    var ctx = document.getElementById('revenue-chart').getContext('2d');
+    var eventNames = [];
+    var revenues = [];
+
+    {% for event in event_data %}
+        eventNames.push("{{ event.event_name }}");
+        revenues.push({{ event.total_revenue }});
+    {% endfor %}
+
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: eventNames,
+            datasets: [{
+                label: 'Revenue',
+                data: revenues,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+
+{% endblock  %}

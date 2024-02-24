@@ -1,0 +1,44 @@
+<!-- razorpay_payment.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razorpay Payment</title>
+</head>
+<body>
+    <!-- Your Razorpay payment form goes here -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        var options = {
+            "key": "{{ settings.RAZORPAY_API_KEY }}",
+            "amount": "{{ total_cost }}",
+            "currency": "INR",
+            "name": "Demo Event",
+            "description": "Event Ticket Booking",
+            "order_id": "{{ order_id }}",
+            "handler": function (response){
+                // Handle Razorpay payment success
+                console.log(response);
+                // You can redirect the user to a success page or handle it as per your requirement
+            },
+            "prefill": {
+                // "name": "{{ request.user.username }}",
+                // "email": "{{ request.user.email }}",
+                // You can prefill other customer details if available
+            },
+            "theme": {
+                "color": "#F37254"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.on('payment.failed', function (response){
+            // Handle payment failure
+            console.log(response.error.description);
+            alert("Payment Failed: " + response.error.description);
+            // You can redirect the user to a failure page or handle it as per your requirement
+        });
+        rzp1.open();
+    </script>
+</body>
+</html>

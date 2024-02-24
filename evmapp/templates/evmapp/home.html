@@ -1,0 +1,36 @@
+<!-- home.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">Upcoming Events</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {% for event in events %}
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ event.event_name }}</h5>
+                    <p class="card-text">Date: {{ event.date }}</p>
+                    <p class="card-text">Time: {{ event.time }}</p>
+                    <p class="card-text">Venue: {{ event.venue }}</p>
+                    <p class="card-text">Organizer: {{ event.organiser }}</p>
+                    <p class="card-text">Price Per Ticket: ₹{{ event.price_per_ticket }}</p>
+                    <p class="card-text" style="color: green;">
+                        Fun Activites Followed by Dinner, Bring Your Friends and Family along!
+                    </p>
+                    <a href="{% url 'bookticket'%}" class="btn btn-primary">Book Tickets</a>
+                    
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

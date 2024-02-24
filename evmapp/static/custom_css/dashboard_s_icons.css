@@ -1,0 +1,54 @@
+
+
+.single-menu-item .module-icon-wrapper {
+    width: 55px;
+    height: 55px;
+    border-radius: 16px;
+    background-color: #f7f8fa;
+    border: solid 1px #dbe1e8;
+    margin: 0 auto 5px;
+    transition: all 0.5s ease;
+    position: relative;
+}
+
+.single-menu-item {
+    text-align: center;
+    padding: 20px 0px;
+}
+.single-menu-item img {
+    max-width: 55px;
+    margin-bottom: 5px;
+}
+.single-menu-item a {
+    color: #5490d4;
+}
+
+.single-menu-card .module-icon-wrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+    background-color: #f7f8fa;
+    border: solid 1px #dbe1e8;
+    margin: 0 auto 5px;
+    transition: all 0.5s ease;
+    position: relative;
+}
+
+.single-menu-card {
+    text-align: center;
+    padding: 20px 0px;
+}
+.single-menu-card img {
+    max-width: 50px;
+    margin-bottom: 5px;
+}
+.single-menu-card a {
+    color: #5490d4;
+}
+.page-wrapper > .content {
+    padding: 20px 15px;
+}
+.nav-link p{
+    font-size: 14px;
+}
+
