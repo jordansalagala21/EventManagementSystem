@@ -154,19 +154,26 @@
                             <span>Event Management System</span>
                         </li>
                         <li id="dashboard_link">
-                            <a href="{% url "dashboard" %}"><i class="la la-dashboard"></i> <span> Dashboard</span></a>
+                            
                             <a href="{% url "home" %}"><i class="la la-home"></i> <span> Home</span></a>
-                        </li>   
-                        <li class="dashboard_link">
-                                <li> <a href="{% url "addevent" %}"> <i class="la la-plus"></i> <span> Add Event </span></a> </li>
-                                <li><a href="{% url "viewevent" %}"> <i class="la la-eye"></i> <span> View Events </span></a> </li>
-                        </li>
-                        <li id="dashboard_link">
                             <a href="{% url "bookticket" %}"><i class="la la-bomb"></i> <span>Book Tickets</span></a>
                         </li>   
 
+                    
                         <li class="submenu">
-                            <a href="{% url "login" %}"><i class="la la-key"></i> <span> Admin Login </span></a>
+                            <a href=""><i class="la la-dashboard"></i> <span> Admin Options</span> <span class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li> <a href="{% url "dashboard" %}">  <span> Admin Dashboard </span></a> </li>
+                                <li> <a href="{% url "addevent" %}">  <span> Add Events </span></a> </li>
+                                <li><a href="{% url "viewevent" %}"> <span> View Events </span></a> </li>
+                            </ul>
+                        </li>
+                    
+                      
+                
+
+                        <li>
+                            <a href="{% url 'login' %}"><i class="la la-key"></i><span> Admin Login </span></a>
                         </li>
                     </ul>
                 </div>

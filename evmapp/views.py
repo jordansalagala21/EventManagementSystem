@@ -46,7 +46,7 @@ def login_view(request):
     return render(request, 'evmapp/login.html', {'error_message':error_message if 'error_message' in locals() else ''})
 
 
-@login_required
+@login_required(login_url='/login/')
 def dashboard(request):
     eventcount = Event.objects.all()
     totalevents = eventcount.count()
@@ -73,7 +73,7 @@ def dashboard(request):
 
     return render(request, 'evmapp/dashboard.html', context)
 
-@login_required
+@login_required(login_url='/login/')
 def add_event(request):
     if request.method == 'POST':
         event_name = request.POST.get('event_name')
@@ -124,7 +124,7 @@ def add_event(request):
     return render(request, 'evmapp/add_event.html')
 
 
-@login_required
+@login_required(login_url='/login/')
 def view_event(request):
     # Assuming you have an Event model and want to fetch all events
     events = Event.objects.all()
@@ -163,7 +163,7 @@ def ticketbooking(request):
         total_cost = float(total_cost)
 
         # Initialize Razorpay client
-        client = razorpay.Client(auth=("rzp_test_2fQsQJ2gUiFEyX", "sjSV9iRgakbf0ZrEdZIZVSSk"))
+        client = razorpay.Client(auth=("rzp_test_LeNsJ6Ge3PhMAU", "Kw4bOXIHHo4FYejipK8FJiBm"))
 
         try:
             # Create Razorpay order
@@ -285,7 +285,7 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
-@login_required
+@login_required(login_url='/login/')
 def edit_event(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     if request.method == 'POST':
