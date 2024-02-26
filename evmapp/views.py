@@ -11,8 +11,6 @@ from django.db.models import Sum, F, Min, Count
 from django.db import transaction
 from twilio.rest import Client
 from django.shortcuts import render, get_object_or_404
-from plotly.offline import plot
-import plotly.graph_objs as go
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate, login
