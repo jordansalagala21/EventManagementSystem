@@ -7,6 +7,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('addevent', views.add_event, name='addevent'),
     path('viewevent', views.view_event, name='viewevent'),
+    path('vendor/', views.vendor, name='vendor'),
     path('booktickets', views.ticketbooking, name='bookticket'),
     path('update_event_status', views.update_event_status, name='update_event_status'),
     path('event/<int:event_id>/', views.event_detail, name='event_detail'),

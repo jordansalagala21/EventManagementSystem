@@ -6,6 +6,9 @@ class Vendor(models.Model):
     purpose = models.CharField(max_length=200)
     contact = models.CharField(max_length=100)
     cost = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.BooleanField(default=True) 
+
+ 
 
     def __str__(self):
         return self.name

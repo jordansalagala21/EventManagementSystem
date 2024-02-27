@@ -79,30 +79,30 @@ WSGI_APPLICATION = 'evmproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'evmdb5',
-#         'USER': 'root',
-#         'PASSWORD': 'A@akbar1',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     },
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('MYSQL_DATABASE'),
-        'USER': env('MYSQL_USER'),
-        'PASSWORD': env('MYSQL_PASSWORD'),
-        'HOST': env('HOST'),
-        'PORT': env('PORT'),
-        'OPTIONS': {
-            "init_command": "SET foreign_key_checks = 0;",
-        },
+        'NAME': 'evmdb5',
+        'USER': 'root',
+        'PASSWORD': 'A@akbar1',
+        'HOST': 'localhost',
+        'PORT': '3306',
     },
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': env('MYSQL_DATABASE'),
+#         'USER': env('MYSQL_USER'),
+#         'PASSWORD': env('MYSQL_PASSWORD'),
+#         'HOST': env('HOST'),
+#         'PORT': env('PORT'),
+#         'OPTIONS': {
+#             "init_command": "SET foreign_key_checks = 0;",
+#         },
+#     },
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

@@ -301,3 +301,14 @@ def edit_event(request, event_id):
     # If it's a GET request, render the edit_event template with the event object
     return render(request, 'evmapp/edit_event.html', {'event': event})
 
+
+def vendor(request):
+    vendors = Vendor.objects.all()
+    name_filter = request.GET.get('name')
+    contact_number_filter = request.GET.get('contact_number')
+    vendors = Vendor.objects.filter()
+    if name_filter:
+        vendors = vendors.filter(name__icontains=name_filter)
+    if contact_number_filter:
+        vendors = vendors.filter(contact_number__icontains=contact_number_filter)
+    return render(request, 'evmapp/vendor.html', {'vendors':vendors})
