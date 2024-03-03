@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="42" height="42" viewBox="0 0 42 42">
+    <defs>
+        <circle id="18fd7g2cea" cx="21" cy="21" r="21"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <use fill="#065DBC" xlink:href="#18fd7g2cea"/>
+        <g fill-rule="nonzero">
+            <path fill="#FFBB04" d="M14.048 21.092L9.836 22.513 6.873 14.042 11.085 12.621z" transform="translate(7 10)"/>
+            <path fill="#FFF" d="M22.758 16.672s-9.909-2.73-16.594-.39l-1.786-5.105C11.064 8.838 17.11.527 17.11.527l5.648 16.145z" transform="translate(7 10)"/>
+            <path fill="#E0E0E0" d="M5.461 14.273l.703 2.008c6.686-2.339 16.594.392 16.594.392L19.903 8.51 5.461 14.273z" transform="translate(7 10)"/>
+            <path fill="#FFBB04" d="M17.11.527s-.757 1.04-2.03 2.486l4.541 12.98c1.897.338 3.137.68 3.137.68L17.11.526z" transform="translate(7 10)"/>
+            <path fill="#F4A21B" d="M17.359 9.526l2.262 6.467c1.897.338 3.137.68 3.137.68L19.903 8.51 17.36 9.526z" transform="translate(7 10)"/>
+            <path fill="#FFBB04" d="M2.722 17.413L6.164 16.281 4.378 11.177 0.959 12.373z" transform="translate(7 10)"/>
+            <path fill="#F4A21B" d="M2.094 15.616L2.722 17.413 6.164 16.281 5.461 14.273z" transform="translate(7 10)"/>
+            <path fill="#F44336" d="M23.116 4.765L24.455 4.765 24.455 9.565 23.116 9.565z" transform="translate(7 10) rotate(-112.986 23.785 7.165)"/>
+            <path fill="#F44336" d="M20.148 1.735L21.487 1.735 21.487 5.613 20.148 5.613z" transform="translate(7 10) rotate(-156.447 20.817 3.674)"/>
+            <path fill="#F44336" d="M22.172 11.154L26.049 11.154 26.049 12.493 22.172 12.493z" transform="translate(7 10) rotate(-166.42 24.11 11.823)"/>
+        </g>
+    </g>
+</svg>

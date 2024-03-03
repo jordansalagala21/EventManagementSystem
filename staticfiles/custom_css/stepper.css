@@ -1,0 +1,93 @@
+.stepper-horizontal {
+  display: table;
+  width: 100%;
+  margin: 0 auto;
+}
+.stepper-horizontal .step {
+  display: table-cell;
+  position: relative;
+  padding: 1.5rem;
+  z-index: 2;
+  width: 25%;
+}
+.stepper-horizontal .step:last-child .step-bar-left, .stepper-horizontal .step:last-child .step-bar-right {
+  display: none;
+}
+.stepper-horizontal .step .step-circle {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 auto;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  z-index: 2;
+  border: 2px solid #D9E2EC;
+}
+.stepper-horizontal .step.done .step-circle {
+  background-color: #199473;
+  border: 2px solid #199473;
+  color: #FFFFFF;
+}
+.stepper-horizontal .step.done .step-circle:before {
+  font-family: "FontAwesome";
+  font-weight: 100;
+  content: "";
+}
+.stepper-horizontal .step.done .step-circle * {
+  display: none;
+}
+.stepper-horizontal .step.done .step-title {
+  color: #102A43;
+}
+.stepper-horizontal .step.editing .step-circle {
+  background: #ffffff;
+  border-color: #199473;
+  color: #199473;
+}
+.stepper-horizontal .step.editing .step-title {
+  color: #199473;
+  text-decoration: underline;
+}
+.stepper-horizontal .step .step-title {
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.stepper-horizontal .step .step-title, .stepper-horizontal .step .step-optional {
+  text-align: center;
+  color: #829AB1;
+}
+.stepper-horizontal .step .step-optional {
+  font-size: 0.75rem;
+  /*font-style: italic;*/
+  color: #9FB3C8;
+}
+.stepper-horizontal .step .step-bar-left, .stepper-horizontal .step .step-bar-right {
+  position: absolute;
+  top: calc(2rem + 5px);
+  height: 5px;
+  background-color: #D9E2EC;
+  border: solid #D9E2EC;
+  border-width: 2px 0;
+}
+.stepper-horizontal .step .step-bar-left {
+  width: calc(100% - 2rem);
+  left: 50%;
+  margin-left: 1rem;
+  z-index: -1;
+}
+.stepper-horizontal .step .step-bar-right {
+  width: 0;
+  left: 50%;
+  margin-left: 1rem;
+  z-index: -1;
+  transition: width 500ms ease-in-out;
+}
+.stepper-horizontal .step.done .step-bar-right {
+  background-color: #199473;
+  border-color: #199473;
+  z-index: 3;
+  width: calc(100% - 2rem);
+}
