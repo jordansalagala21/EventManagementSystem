@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="margin-bottom:50px ;">
         <div class="col-md-12">
             <div class="card mb-0">
                 <div class="card-header">
@@ -61,6 +61,14 @@
                                     <label class="col-lg-3 col-form-label">Theme</label>
                                     <div class="col-lg-9">
                                         <input type="text" name="theme" class="form-control" value="{{ event.theme }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Add a short Event Description</label>
+                                    <div class="col-lg-9">
+                                        <textarea name="description" class="form-control" value="{{event.description}}" rows="3" required></textarea>
                                     </div>
                                 </div>
                             </div>

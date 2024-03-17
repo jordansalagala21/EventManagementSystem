@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row" style="margin-bottom:35px ;">
+    <div class="col-md-12">
+        <div class="card mb-0">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Volunteer Form</h4>
+            </div>
+            <div class="card-body">
+                <form id="volunteerForm" method="post" action="{% url 'add_volunteer' %}">
+                    {% csrf_token %}
+                    <div class="row" >
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Name:</label>
+                                <div class="col-lg-9">
+                                    <input type="text" name="name" class="form-control" placeholder="John Doe" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Contact:</label>
+                                <div class="col-lg-9">
+                                    <input type="text" name="contact_number" class="form-control" placeholder="e.g., 123-456-7890" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Email:</label>
+                                <div class="col-lg-9">
+                                    <input type="email" name="email" class="form-control" placeholder="john.Doe@gmail.com" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Flat Number:</label>
+                                <div class="col-lg-9">
+                                    <input type="text" name="flat_number" class="form-control" placeholder="A101" required>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Skills/Interests:</label>
+                                <div class="col-lg-9">
+                                    <input type="text" name="skills_interests" class="form-control" placeholder="eg: People Management" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Previous Experience:</label>
+                                <div class="col-lg-9">
+                                    <input type="text" name="previous_experience" class="form-control" placeholder="eg: Organiser" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Availability Period:</label>
+                                <div class="col-lg-9">
+                                    <select name="availability_period" class="form-control" required>
+                                        <option value="" disabled selected hidden>Select availability period</option>
+                                        <option value="One-time">One-time</option>
+                                        <option value="Weekly">Weekly</option>
+                                        <option value="Monthly">Monthly</option>
+                                        <option value="Monthly">Always</option>
+                                        <!-- Add more options as needed -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Volunteer Role/Position:</label>
+                                <div class="col-lg-9">
+                                    <select name="volunteer_role" class="form-control" required>
+                                    <option value="" disabled selected hidden>Select Position</option>
+                                    <option value="Administrative Assistant">Administrative Assistant</option>
+                                    <option value="Fundraiser">Fundraiser</option>
+                                    <option value="Marketing Coordinator">Marketing Coordinator</option>
+                                    <option value="Social Media Manager">Social Media Manager</option>
+                                    <option value="Event Planner">Event Planner</option>
+                                    <option value="Mentor">Mentor</option>                                    
+                                    <option value="Food Distribution Coordinator">Food Distribution Coordinator</option>
+                                    <option value="Event Photographer">Event Photographer</option>
+                                    <option value="Event Videographer">Event Videographer</option>
+                                    <option value="Technical Support">Technical Support</option>
+                                    <option value="Inventory Manager">Inventory Manager</option>
+                                    <option value="Security Officer">Security Officer</option>
+                                    <option value="First Aid Provider">First Aid Provider</option>
+                                    <option value="First Aid Provider">Refree</option>
+                                        <!-- Add more options as needed -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Emergency Contact:</label>
+                                <div class="col-lg-9">
+                                    <input type="text" name="emergency_contact" class="form-control" placeholder="e.g., 123-456-7890" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

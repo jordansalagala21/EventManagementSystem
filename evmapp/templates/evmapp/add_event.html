@@ -14,7 +14,7 @@
     </div>
 
     
-    <div class="row">
+    <div class="row" style="margin-bottom:50px ;">
         <div class="col-md-12">
             <div class="card mb-0">
                 <div class="card-header">
@@ -32,18 +32,24 @@
                                         <input type="text" name="event_name" class="form-control">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-xl-6">
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label">Organiser Name</label>
                                     <div class="col-lg-9">
                                         <input type="text" name="organiser_name" class="form-control">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-xl-6">
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label">Time</label>
                                     <div class="col-lg-9">
                                         <input type="time" name="time" class="form-control">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-xl-6">
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label">Date</label>
                                     <div class="col-lg-9">
@@ -58,10 +64,20 @@
                                         <input type="text" name="venue" class="form-control">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-xl-6">
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label">Theme</label>
                                     <div class="col-lg-9">
                                         <input type="text" name="theme" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Add a short Event Description</label>
+                                    <div class="col-lg-9">
+                                        <textarea name="description" class="form-control" placeholder="eg: Fun Activites Followed by Dinner, Bring Your Friends and Family along!" rows="3" required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +118,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-secondary mb-4" id="add-vendor">Add Vendor</button>
+                        <button type="button" class="btn btn-primary mb-4" id="add-vendor">Click To Add Additional Vendors</button>
                         
                         <h4 class="card-title mb-4 border-bottom pb-2">Ticketing Details</h4>
                         <div class="row">
@@ -119,6 +135,16 @@
                                     <label class="col-lg-3 col-form-label">Price per Ticket</label>
                                     <div class="col-lg-9">
                                         <input type="number" name="price_per_ticket" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-xl-6">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Free Ticket?</label>
+                                    <div class="col-lg-9">
+                                        <input type="checkbox" name="free_ticket" class="form-check-input" id="free-ticket-checkbox">
+                                        <label class="form-check-label" for="free-ticket-checkbox">Yes, this event has free tickets</label>
                                     </div>
                                 </div>
                             </div>
@@ -147,10 +173,17 @@
         
         addVendorButton.addEventListener('click', function() {
             const clonedVendor = document.querySelector('.vendor').cloneNode(true);
+            
+            // Clear values of cloned fields
+            const clonedInputs = clonedVendor.querySelectorAll('input');
+            clonedInputs.forEach(input => {
+                input.value = ''; // Clear the value
+            });
+            
             vendorDetailsContainer.appendChild(clonedVendor);
         });
     });
-    </script>
+</script>
 
 
 

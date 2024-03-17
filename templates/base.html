@@ -5,9 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <meta name="description" content="Smarthr - Bootstrap Admin Template">
-    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
-    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="description" content="Event Management App">
     <meta name="robots" content="noindex, nofollow">
     {% block title %}
     <title></title>
@@ -167,15 +165,23 @@
                                 <li> <a href="{% url "addevent" %}">  <span> Add Events </span></a> </li>
                                 <li><a href="{% url "viewevent" %}"> <span> View Events </span></a> </li>
                                 <li><a href="{% url "vendor" %}"> <span> View Vendors </span></a> </li>
+                                <li><a href="{% url "add_volunteer" %}"> <span> Add Volunteers </span></a> </li>
+                                <li><a href="{% url "view_volunteers" %}"> <span> View Volunteers </span></a> </li>
                             </ul>
                         </li>
                     
                       
-                
+                        
 
                         <li>
                             <a href="{% url 'login' %}"><i class="la la-key"></i><span> Admin Login </span></a>
                         </li>
+
+                        <li class="submenu">
+                            <a href=""><i class="la la-user"></i> <span> Tech Support</span> <span class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li><a href=""><i class="la la-phone"></i><span style="font-size: 15px;"> +918121004348</span></a></li>
+                            </ul>
                     </ul>
                 </div>
             </div>
@@ -188,7 +194,7 @@
             <div class="content container-fluid px-2 pt-2">
                 {% block content %}
                 {% endblock %}
-                    <p class="card text-center p-2 text-muted fixed-bottom position-absolute mb-0" style="border-radius: 0;z-index: 999">copyright © {% now 'Y' %} | {{ organization.org_name }} </p>
+                    <p class="card text-center p-2 text-muted fixed-bottom position-absolute mb-0" style="border-radius: 0;z-index: 999">copyright © {% now 'Y' %} | Version 1.1 </p>
             </div>
             <!-- /Page Content -->
         </div>

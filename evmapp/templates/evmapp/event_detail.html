@@ -3,12 +3,17 @@
 {% block content %}
 <div class="content container-fluid">
     <div class="page-header">
-        <div class="row">
+        <div class="row" style="margin-bottom:50px ;">
             <div class="col-sm-12">
                 <h3 class="page-title">View Event Details</h3>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item active">Event Details</li>
                 </ul>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <a href="{% url 'download_participants_csv' %}" class="btn btn-primary"><i class="la la-download"></i>Download CSV</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -55,7 +60,12 @@
                                                 <td>{{ booking.contact_number }}</td>
                                                 <td>{{ booking.flat_number }}</td>
                                                 <td>{{ booking.number_of_tickets }}</td>
+                                                {% if event.free_ticket %}
+                                                <td>Free Ticket</td>
+                                                {% else %}
                                                 <td>₹{{ booking.total_cost }}</td>
+                                                {% endif %}
+                                                
                                                 <td>{{ booking.ticket_id }}</td>
                                             </tr>
                                             {% endfor %}
@@ -90,7 +100,11 @@
                             </tr>
                             <tr>
                                 <td>Cost Per Ticket:</td>
-                                <td class="text-right">₹{{ event.price_per_ticket }}</td>
+                                {% if event.free_ticket %}
+                                <td>Free Ticket</td>
+                                {% else %}
+                                <td>₹{{ event.price_per_ticket }}</td>
+                                {% endif %}
                             </tr>
                             <tr>
                                 <td>Venue:</td>

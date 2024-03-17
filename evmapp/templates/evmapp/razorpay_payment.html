@@ -11,7 +11,7 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         var options = {
-            "key": "{{ settings.RAZORPAY_API_KEY }}",
+            "key": "rzp_test_OOZujHpu1geoPX",
             "amount": "{{ total_cost }}",
             "currency": "INR",
             "name": "Demo Event",
@@ -36,6 +36,7 @@
         rzp1.on('payment.failed', function (response){
             // Handle payment failure
             console.log(response.error.description);
+            console.log(options);
             alert("Payment Failed: " + response.error.description);
             // You can redirect the user to a failure page or handle it as per your requirement
         });

@@ -18,46 +18,54 @@
     <div class="row">
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
             <div class="card dash-widget">
-                <div class="card-body">
-                    <span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
-                    <div class="dash-widget-info">
-                        <h3>{{totalevents}}</h3>
-                        <span>Events Organised</span>
+                <a href="{% url "viewevent" %}">
+                    <div class="card-body">
+                        <span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
+                        <div class="dash-widget-info">
+                            <h3>{{totalevents}}</h3>
+                            <span>Events Organised</span>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
             <div class="card dash-widget">
-                <div class="card-body">
-                    <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
-                    <div class="dash-widget-info">
-                        <h3>{{totalvendors}}</h3>
-                        <span>Vendors</span>
+                <a href="{% url "vendor" %}">
+                    <div class="card-body">
+                        <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+                        <div class="dash-widget-info">
+                            <h3>{{totalvendors}}</h3>
+                            <span>Vendors</span>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
             <div class="card dash-widget">
-                <div class="card-body">
-                    <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
-                    <div class="dash-widget-info">
-                        <h3>₹{{total_funds}}</h3>
-                        <span>Funds Collected</span>
+                <a href="{% url "viewevent" %}">
+                    <div class="card-body">
+                        <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
+                        <div class="dash-widget-info">
+                            <h3>₹{{total_funds}}</h3>
+                            <span>Funds Collected</span>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
             <div class="card dash-widget">
-                <div class="card-body">
-                    <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
-                    <div class="dash-widget-info">
-                        <h3>218</h3>
-                        <span>Employees</span>
+                <a href="{% url "view_volunteers" %}">
+                    <div class="card-body">
+                        <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+                        <div class="dash-widget-info">
+                            <h3>{{volunteers}}</h3>
+                            <span>Volunteers</span>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>

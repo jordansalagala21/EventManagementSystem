@@ -1,12 +1,15 @@
+import csv, string, secrets
+from django.views.decorators.csrf import csrf_exempt
+
 import uuid
 import razorpay
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from evmproject import settings
-from .models import Booking, Event, Vendor, Payment
+from .models import Booking, Event, Vendor, Volunteer
 from django.contrib import messages
 from django.views.decorators.http import require_POST
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.db.models import Sum, F, Min, Count
 from django.db import transaction
 from twilio.rest import Client
@@ -48,6 +51,8 @@ def login_view(request):
 def dashboard(request):
     eventcount = Event.objects.all()
     totalevents = eventcount.count()
+    volunteercount = Volunteer.objects.all()
+    volunteers = volunteercount.count()
     vendors = Vendor.objects.all()
     totalvendors = vendors.count()
     total_funds = Booking.objects.aggregate(total_funds=Sum('total_cost'))['total_funds'] or 0
@@ -65,7 +70,8 @@ def dashboard(request):
         'total_funds': total_funds,
         'event_labels': event_labels,
         'tickets_sold': tickets_sold,
-        'event_data':event_data
+        'event_data':event_data,
+        'volunteers':volunteers,
     }
     
 
@@ -82,6 +88,8 @@ def add_event(request):
         theme = request.POST.get('theme')
         total_tickets = request.POST.get('total_tickets')
         price_per_ticket = request.POST.get('price_per_ticket')
+        description = request.POST.get('description')
+        free_ticket = request.POST.get('free_ticket')
 
         # Create Event object
         event = Event.objects.create(
@@ -92,8 +100,11 @@ def add_event(request):
             venue=venue,
             theme=theme,
             total_tickets=total_tickets,
-            price_per_ticket=price_per_ticket
+            price_per_ticket=price_per_ticket,
+            description = description,
+            free_ticket = free_ticket,
         )
+   
 
         # Handling vendors
         vendor_names = request.POST.getlist('vendor_name[]')
@@ -130,6 +141,7 @@ def view_event(request):
     return render(request, 'evmapp/view_events.html', {'events': events, 'total_tickets_sold':total_tickets_sold})
 
 
+
 def send_confirmation_sms(contact_number, message):
     # Initialize Twilio client
     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
@@ -147,6 +159,11 @@ def send_confirmation_sms(contact_number, message):
 
 
 
+
+def generate_ticket_id(length=5):
+    characters = string.ascii_uppercase + string.digits
+    return ''.join(secrets.choice(characters) for _ in range(length))
+
 def ticketbooking(request):
     if request.method == 'POST':
         # Retrieve form data
@@ -160,83 +177,55 @@ def ticketbooking(request):
 
         total_cost = float(total_cost)
 
-        # Initialize Razorpay client
-        client = razorpay.Client(auth=("rzp_test_LeNsJ6Ge3PhMAU", "Kw4bOXIHHo4FYejipK8FJiBm"))
+        if not contact_number.startswith('+'):
+            contact_number = f'+91{contact_number}'
 
-        try:
-            # Create Razorpay order
-            razorpay_order = client.order.create({'amount': total_cost * 100, 'currency': 'INR', 'payment_capture': '1'})
-            order_id = razorpay_order['id']
+        # Generate unique ticket ID
+        ticket_id = str(uuid.uuid4().hex)[:5].upper()  # Generating a 5-character unique ID
 
-            # Redirect user to Razorpay payment page
-            return render(request, 'evmapp/razorpay_payment.html', {'order_id': order_id, 'total_cost': total_cost})
+        # Check if the total cost is greater than 0 before initializing Razorpay
+        if total_cost > 0:
+            # Initialize Razorpay client
+            client = razorpay.Client(auth=("rzp_test_LeNsJ6Ge3PhMAU", "Kw4bOXIHHo4FYejipK8FJiBm"))
+            payment = client.order.create({'amount': total_cost * 100, 'currency': 'INR', 'payment_capture': '1'})
+            print("Payment status:", payment['status'])               
+            booking = Booking(
+                event_id=event_id,
+                event=event,
+                number_of_tickets=number_of_tickets,  
+                name=name,
+                contact_number=contact_number,
+                flat_number=flat_number,
+                total_cost=total_cost,
+                ticket_id=ticket_id,
+                payment_id=payment['id']
+            )
+            booking.save()
 
-        except Exception as e:
-            # Handle exceptions (e.g., if order creation fails)
-            messages.error(request, f'Error: {str(e)}')
+            confirmation_message = f"Dear {name}, your booking for {number_of_tickets} ticket(s) with ticket ID {ticket_id} has been confirmed."
+            send_confirmation_sms(contact_number, confirmation_message)
+
+            return render(request, "evmapp/checkout.html", {'payment': payment})
+        else:
+            # Create booking without payment for events with zero cost
+            booking = Booking(
+                    event_id=event_id,
+                    event=event,
+                    number_of_tickets=number_of_tickets,  
+                    name=name,
+                    contact_number=contact_number,
+                    flat_number=flat_number,
+                    total_cost=0,  # No cost for free events
+                    ticket_id=ticket_id
+                )
+            booking.save()
+            messages.success(request, "Your Booking has been successfully confirmed")
             return redirect('home')
+    
+    events = Event.objects.all()
 
-    elif request.method == 'POST' and 'razorpay_payment_id' in request.POST:
-        # Verify Razorpay payment
-        razorpay_payment_id = request.POST['razorpay_payment_id']
-        order_id = request.POST['razorpay_order_id']
-        amount = request.POST['amount']
+    return render(request, 'evmapp/ticketbooking.html', {'events': events})
 
-        try:
-            client = razorpay.Client(auth=("rzp_test_2fQsQJ2gUiFEyX", "sjSV9iRgakbf0ZrEdZIZVSSk"))
-            payment = client.payment.fetch(razorpay_payment_id)
-
-            if payment['amount'] == int(amount) and payment['order_id'] == order_id and payment['status'] == 'captured':
-                # Payment successful, create booking object
-                event = Event.objects.get(pk=request.POST['event'])
-                number_of_tickets = int(request.POST['number_of_tickets'])
-                name = request.POST['name']
-                contact_number = request.POST['contact_number']
-                flat_number = request.POST['flat_number']
-                total_cost = float(request.POST['total_cost'])
-
-                with transaction.atomic():
-                    ticket_id = uuid.uuid4().hex[:8].upper()
-                    booking = Booking.objects.create(
-                        event=event,
-                        number_of_tickets=number_of_tickets,
-                        name=name,
-                        contact_number=contact_number,
-                        flat_number=flat_number,
-                        total_cost=total_cost,
-                        order_id=order_id,
-                        ticket_id=ticket_id
-                    )
-
-                    confirmation_message = f"Dear {name}, your booking for {number_of_tickets} ticket(s) has been confirmed. Your ticket ID is {ticket_id}. Thank you!"
-                    send_confirmation_sms(contact_number, confirmation_message)
-                    messages.success(request, 'Your Tickets have been booked successfully.')
-
-                return redirect('home')
-            else:
-                # Payment failed or incorrect payment details
-                messages.error(request, 'Payment verification failed.')
-                return redirect('home')
-
-        except Exception as e:
-            # Handle exceptions
-            messages.error(request, f'Error: {str(e)}')
-            return redirect('home')
-
-    else:
-        # If GET request, render the form
-        events = Event.objects.all()
-        bookings = Booking.objects.values('name').annotate(
-            id=Min('id'),
-            event_id=F('event_id'),
-            number_of_tickets=Sum('number_of_tickets'),
-            booker_name=F('name'),
-            contact_number=F('contact_number'),
-            flat_number=F('flat_number'),
-            total_cost=Sum('total_cost'),
-            ticket_id=F('ticket_id')
-        )
-        return render(request, 'evmapp/ticketbooking.html', {'events': events, 'bookings': bookings})
 
 def update_event_status(request):
     event_id = request.POST.get('event_id') 
@@ -254,10 +243,10 @@ def update_event_status(request):
 @login_required
 def event_detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
-    total_tickets_sold = Booking.objects.aggregate(total_tickets_sold=Sum('number_of_tickets'))['total_tickets_sold'] or 0
+    total_tickets_sold = Booking.objects.filter(event=event).aggregate(total_tickets_sold=Sum('number_of_tickets'))['total_tickets_sold'] or 0
     event_cost = event.vendors.aggregate(total_cost=Sum('cost'))['total_cost'] or 0
     money_collected = total_tickets_sold * event.price_per_ticket
-    percentage_collected = (money_collected / event_cost) * 100 if event_cost else 0
+    percentage_collected = round((money_collected / event_cost) * 100, 2) if event_cost else 0
     bookings = Booking.objects.filter(event=event)
     name_filter = request.GET.get('name')
     contact_number_filter = request.GET.get('contact_number')
@@ -274,8 +263,14 @@ def event_detail(request, event_id):
                    'percentage_collected':percentage_collected,
                    'bookings':bookings})
 
+
+@csrf_exempt
 def home(request):
     events = Event.objects.all()
+    if request.method == 'POST':
+        a = request.POST
+        print(a)
+        
     return render(request, "evmapp/home.html", {'events': events})
 
 @login_required
@@ -294,6 +289,7 @@ def edit_event(request, event_id):
         event.date = request.POST.get('date')
         event.venue = request.POST.get('venue')
         event.theme = request.POST.get('theme')
+        event.description = request.POST.get('description')
         # Save the event object
         event.save()
         messages.success(request, 'Event details edited successfully')
@@ -301,7 +297,7 @@ def edit_event(request, event_id):
     # If it's a GET request, render the edit_event template with the event object
     return render(request, 'evmapp/edit_event.html', {'event': event})
 
-
+@login_required(login_url='/login/')
 def vendor(request):
     vendors = Vendor.objects.all()
     name_filter = request.GET.get('name')
@@ -312,3 +308,65 @@ def vendor(request):
     if contact_number_filter:
         vendors = vendors.filter(contact_number__icontains=contact_number_filter)
     return render(request, 'evmapp/vendor.html', {'vendors':vendors})
+
+
+
+def download_participants_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="participants.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Name', 'Contact Number', 'Flat Number', 'Tickets', 'Total Cost', 'Ticket ID'])
+
+    bookings = Booking.objects.all()
+    for booking in bookings:
+        writer.writerow([booking.name, booking.contact_number, booking.flat_number, booking.number_of_tickets, booking.total_cost, booking.ticket_id])
+
+    return response
+
+
+
+def add_volunteer(request):
+    if request.method == 'POST':
+        # Extract data from the request
+        name = request.POST.get('name')
+        contact_number = request.POST.get('contact_number')
+        email = request.POST.get('email')
+        flat_number = request.POST.get('flat_number')
+        skills_interests = request.POST.get('skills_interests')
+        previous_experience = request.POST.get('previous_experience')
+        availability_period = request.POST.get('availability_period')
+        volunteer_role = request.POST.get('volunteer_role')
+        emergency_contact = request.POST.get('emergency_contact')
+
+        # Create a new Volunteer object with the extracted data
+        new_volunteer = Volunteer.objects.create(
+            name=name,
+            contact_number=contact_number,
+            email=email,
+            flat_number=flat_number,
+            skills_interests=skills_interests,
+            previous_experience=previous_experience,
+            availability_period=availability_period,
+            volunteer_role=volunteer_role,
+            emergency_contact=emergency_contact
+        )
+
+        # Optionally, you can perform additional actions here, such as sending a confirmation email
+
+        # Redirect to a success page or home page
+        messages.success(request, 'Your Volunteer Form was Submitted Successfully, Our team will be reaching out to you soon!!')
+        return redirect(home)
+    
+    return render(request, 'evmapp/add_volunteer.html')
+
+@login_required(login_url='/login/')
+def view_volunteers(request):
+    volunteers = Volunteer.objects.all()
+    return render(request, 'evmapp/view_volunteers.html', {'volunteers':volunteers})
+
+
+
+
+
+

@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-%=$70@b8eq$y&9!sdualerau147z-zw^56k+zbjcyw4#sgn=xl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['nugevents.in', 'www.nugevents.in', '127.0.0.1']
 
 
 # Application definition
@@ -171,6 +171,6 @@ TWILIO_AUTH_TOKEN = 'f14bb57ddd218e5b5c6722b41b8099b1'
 # Twilio Phone Number
 TWILIO_PHONE_NUMBER = '+18159494089'
 
-RAZORPAY_API_KEY = 'rzp_test_LeNsJ6Ge3PhMAU'
+RAZORPAY_API_KEY = 'rzp_test_OOZujHpu1geoPX'
 
 
