@@ -80,16 +80,7 @@ WSGI_APPLICATION = 'evmproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'evmdb5',
-#         'USER': 'root',
-#         'PASSWORD': 'A@akbar1',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     },
-# }
+
 
 DATABASES = {
     'default': {
@@ -98,19 +89,6 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': env('MYSQL_DATABASE'),
-#         'USER': env('MYSQL_USER'),
-#         'PASSWORD': env('MYSQL_PASSWORD'),
-#         'HOST': env('HOST'),
-#         'PORT': env('PORT'),
-#         'OPTIONS': {
-#             "init_command": "SET foreign_key_checks = 0;",
-#         },
-#     },
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -163,14 +141,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-TWILIO_ACCOUNT_SID = 'AC13c278aac2682a6ede5237665a57254c'
+TWILIO_ACCOUNT_SID = 'your twilio sid'
 
 # Twilio Auth Token
-TWILIO_AUTH_TOKEN = 'f14bb57ddd218e5b5c6722b41b8099b1'
+TWILIO_AUTH_TOKEN = 'your twilio auth token'
 
 # Twilio Phone Number
-TWILIO_PHONE_NUMBER = '+18159494089'
+TWILIO_PHONE_NUMBER = 'Your twilio phone number'
 
-RAZORPAY_API_KEY = 'rzp_test_OOZujHpu1geoPX'
+RAZORPAY_API_KEY = 'Your razorpay api key'
 
 
