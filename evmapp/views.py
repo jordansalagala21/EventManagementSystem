@@ -186,7 +186,7 @@ def ticketbooking(request):
         # Check if the total cost is greater than 0 before initializing Razorpay
         if total_cost > 0:
             # Initialize Razorpay client
-            client = razorpay.Client(auth=("rzp_test_LeNsJ6Ge3PhMAU", "Kw4bOXIHHo4FYejipK8FJiBm"))
+            client = razorpay.Client(auth=("razorpayapi", "razorpaysecretkey"))
             payment = client.order.create({'amount': total_cost * 100, 'currency': 'INR', 'payment_capture': '1'})
             print("Payment status:", payment['status'])               
             booking = Booking(
